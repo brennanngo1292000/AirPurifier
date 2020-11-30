@@ -1,4 +1,5 @@
 import {NativeEventEmitter,  NativeModules} from 'react-native';
+import {log} from '../debug'
 
 var Mqtt = NativeModules.Mqtt;
 
@@ -19,7 +20,7 @@ var MqttClient = function (options, clientRef) {
 }
 
 MqttClient.prototype.on = function (event, callback) {
-    console.log('setup event', event);
+    log('setup event', event);
     this.eventHandler[event] = callback;
 }
 
@@ -91,7 +92,7 @@ module.exports = {
 
         /* Listen mqtt event */
         if (this.eventHandler === null) {
-            console.log('add mqtt_events listener')
+            log('add mqtt_events listener')
             this.eventHandler = emitter.addListener(
                 "mqtt_events",
                 (data) => this.dispatchEvents(data));

@@ -6,37 +6,37 @@ import Carousel from '../SnapCarousel';
 import Text from '../Text';
 
 
-// tele/92/air_purifier/LWT
+// tele/92/36/air_purifier/LWT
 // msg: Online/ Offline
-// stat/92/air_purifier/power
+// stat/92/36/air_purifier/power
 // msg: 
 // Bật máy: {"power": 1, "by": "...."}
 // Tắt máy: {"power": 0, "by": "...."}
 
-// stat/92/air_purifier/mode
+// stat/92/36/air_purifier/mode
 // msg: 
 // Manual: {"mode": 1, "by": "...."}
 // Auto: {"mode": 0, "by": "...."}
 
-// stat/92/air_purifier/speed
+// stat/92/36/air_purifier/speed
 // Msg: 
 // Tốc độ 1: {"speed": 1, "by": "...."}
 // Tốc độ 2: {"speed": 2, "by": "...."}
 // Tốc độ 3: {"speed": 3, "by": "...."}
 
-// stat/92/air_purifier/pm2.5
+// stat/92/36/air_purifier/pm2.5
 // {"pm2.5": 1, "time": time_unix}
 
-// stat/92/air_purifier/pm1.0
+// stat/92/36/air_purifier/pm1.0
 // {"pm1.0": 1, "time": time_unix}
 
-// stat/92/air_purifier/pm100
+// stat/92/36/air_purifier/pm100
 // {"pm100": 1, "time": time_unix}
 
 // cmnd/.../..../power
 // cmnd/.../.../mode
 // cmnd/..../..../speed
-// Msg giống như trên,  trường "by": "ap_co"
+// trường "by": "ap_co"
 
 class Control extends React.Component {
     constructor(props) {

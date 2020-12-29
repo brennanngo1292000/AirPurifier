@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import { View ,TouchableOpacity, Text } from 'react-native';
 import CodePush from 'react-native-code-push';
+import { colors } from '../../theme';
+import Block from '../Block';
+import { Touchable } from '../Button';
+import Text from '../Text';
 
-class MyApp extends Component {
+class UpgradeApp extends Component {
     onButtonPress() {
         CodePush.sync({
             updateDialog: true,
@@ -11,13 +14,13 @@ class MyApp extends Component {
     }
     render() {
         return (
-            <View>
-                <TouchableOpacity onPress={this.onButtonPress}>
-                    <Text>Check for safdsg dgfdhgfj asgfdghdfjhgfjk dgfh updates</Text>
-                </TouchableOpacity>
-            </View>
+            <Block flex middle>
+                <Touchable onPress={this.onButtonPress}>
+                    <Text color={colors.text1}>Check for updates</Text>
+                </Touchable >
+            </Block>
         )
     }
 }
 
-export default MyApp;
+export default UpgradeApp;

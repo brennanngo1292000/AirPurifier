@@ -14,7 +14,7 @@ function Lock({ navigation: { navigate } }) {
     }
 
     function openSetting() {
-        alert('setting');
+        return navigate('setting')
     }
 
     return (

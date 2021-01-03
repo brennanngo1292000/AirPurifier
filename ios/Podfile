@@ -9,11 +9,6 @@ target 'AirPurifier' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'MQTTClient'
-  pod 'RNSVG', :path => '../node_modules/react-native-svg'
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
-        [...]
-        'RCTImage', # <-- Add RCTImage 
-  ]
 
   target 'AirPurifierTests' do
     inherit! :complete

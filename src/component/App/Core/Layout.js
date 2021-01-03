@@ -12,9 +12,9 @@ const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 function Layout({ scroll, children, colors, forceInset, contentContainerStyle, style, ...rest }) {
     return (
-        <SafeAreaView forceInset={forceInset} style={[{ flex: 1 }, style]} {...rest}>
-            <StatusBar />
-            <LinearGradient colors={colors} style={{ flex: 1 }}>
+        <LinearGradient colors={colors} style={{ flex: 1 }}>
+            <SafeAreaView forceInset={forceInset} style={[{ flex: 1 }, style]} {...rest}>
+                <StatusBar />
                 {
                     scroll ?
                         (
@@ -27,8 +27,8 @@ function Layout({ scroll, children, colors, forceInset, contentContainerStyle, s
                             </View>
                         )
                 }
-            </LinearGradient>
-        </SafeAreaView>
+            </SafeAreaView>
+        </LinearGradient>
     )
 }
 

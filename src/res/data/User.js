@@ -2,6 +2,9 @@ import Storage from './Storage';
 
 class User {
     #data;
+    constructor() {
+        this.load_data();
+    }
     async load_data() {
         this.#data = {
             first_name: await Storage.get_str_entry("first_name"),
@@ -21,4 +24,12 @@ class User {
     }
 }
 
-export default User;
+let user = new User();
+
+export function getUserInfo() {
+    return user.get_data();
+}
+
+export async function setUserInfo(first_name, surname) {
+    return user.set_data(first_name, surname)
+}

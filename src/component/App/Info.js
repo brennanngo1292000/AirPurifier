@@ -35,7 +35,7 @@ function getModeShow(value) {
     }
 }
 function getPMShow(type, value) {
-    if(value) return `${type} ${value} μg/m3`;
+    if(value != null && value != undefined)  return `${type} : ${value} μg/m3`;
     else return `${type} : _ μg/m3`
 }
 
@@ -45,7 +45,7 @@ function Info() {
         <ImageBackground
             source={require('../../assets/image/info.png')}
             resizeMode={"contain"}
-            style={{ width: wp(80), height: wp(80) }}>
+            style={{ width: wp(70), height: wp(70) }}>
             <Block flex center middle>
                 <Text p color={'white'}>
                     {getSpeedShow(speed['speed'])}
@@ -56,12 +56,12 @@ function Info() {
                 <Text p color={'white'}>
                    {getPMShow('PM2.5', pm25['pm2.5'])}
                 </Text> 
-                <Text p color={'white'}>
+                {/* <Text p color={'white'}>
                    {getPMShow('PM1.0', pm10['pm1.0'])}
                 </Text> 
                 <Text p color={'white'}>
                    {getPMShow('PM100', pm100['pm100'])}
-                </Text>
+                </Text> */}
             </Block>
         </ImageBackground>
     )

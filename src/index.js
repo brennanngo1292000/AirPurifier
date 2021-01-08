@@ -6,6 +6,8 @@ import StoreApp from './Context';
 import MQTT from './lib/mqtt'
 import { log } from './lib/debug';
 import { isObject, isString } from 'underscore';
+import FlashMessage from './component/FlashMessage'
+import { showFlashMessage } from './util';
 
 
 // sub topic :
@@ -107,41 +109,23 @@ export default function () {
             if(data == null || data == undefined) return;
             log('______________data'+ data + topic);
             let res = JSON.parse(data.toString())
-            log(res);
-            log(typeof res)
             switch(topic){
                 case 'tele/92/36/air_purifier/LWT':
-                    log('lwt', res)
-                    setLWT(res);
-                    break;
+                    return setLWT(res);
                 case 'stat/92/36/air_purifier/power':
-                    log('power', res)
-                    setPower(res)
-                    break;
+                    return setPower(res)
                 case 'stat/92/36/air_purifier/mode':
-                    log('mode', res);
-                    setMode(res)
-                    break;
+                    return setMode(res)
                 case'stat/92/36/air_purifier/speed':
-                    log('speed', res)
-                    setSpeed(res)
-                    break;
+                    return setSpeed(res)
                case 'stat/92/36/air_purifier/pm2.5':
-                    log('pm2.5', res)
-                    setpm25(res)
-                    break;
+                    return setpm25(res)
                case 'stat/92/36/air_purifier/pm1.0':
-                    log('pm1.0', res)
-                    setpm10(res)
-                    break;
+                    return setpm10(res)
                case 'stat/92/36/air_purifier/pm100':
-                    log('pm100', res)
-                    setpm100(res)
-                    break;
+                    return setpm100(res)
                case 'stat/92/36/air_purifier/speed':
-                    log('speed', res)
-                    setSpeed(res)
-                    break;
+                    return setSpeed(res)
                 default:
                     return;
             }
@@ -162,12 +146,15 @@ export default function () {
         
     }
     async function onMode (value) {
+        showFlashMessage('info', 'Mode', `You have been sent the mode: {mode:${value}} to topic: cmnd/92/36/air_purifier/mode`)
         return publish('cmnd/92/36/air_purifier/mode', {mode:value});
     }
     async function onSpeed (value) {
-        return publish('cmnd/92/36/air_purifier/mode/speed', {speed:value});
+        showFlashMessage('info', 'Speed', `You have been sent the speeder: {speed:${value}} to topic: cmnd/92/36/air_purifier/speed`)
+        return publish('cmnd/92/36/air_purifier/speed', {speed:value});
     }
     async function onPower (value) {
+        showFlashMessage('info', 'Power', `You have been sent the poewer: {power:${value}} to topic: cmnd/92/36/air_purifier/power`)
         return publish('cmnd/92/36/air_purifier/power', {power:value});
     }
 
@@ -201,6 +188,7 @@ export default function () {
                     <App />
                 </StoreApp.Provider>
             </NavigationContainer>
+            <FlashMessage ref={(ref) => FlashMessage.setRef(ref)} />
         </SafeAreaProvider>
     );
 }

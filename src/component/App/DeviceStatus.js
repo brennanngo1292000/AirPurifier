@@ -7,8 +7,8 @@ import Block from '../Block';
 import Text from '../Text';
 
 function getPowerShow (power) {
-    if(has(power, 'power') && power['power'] == 1) return 'ONLINE';
-    return 'OFFLINE'
+    if(has(power, 'power') && power['power'] == 1) return 'ON';
+    return 'OFF'
 }
 function getStatusShow (lwt) {
     if(isString(lwt) && lwt.toLowerCase() == 'online') return 'online';

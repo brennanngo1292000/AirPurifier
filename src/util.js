@@ -17,7 +17,7 @@ export function showFlashMessage(type, title, description, autoHide = true, onSh
       position: 'top',
       text1: title,
       text2: description,
-      visibilityTime: 4000,
+      visibilityTime: 2000,
       autoHide,
       topOffset: statusBar,
       bottomOffset: 30,

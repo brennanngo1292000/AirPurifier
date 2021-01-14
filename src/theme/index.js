@@ -1,9 +1,10 @@
 export const colors = {
-    background:'#353A40',
-    gradientBackground: ['#353A40', '#16171B'],
+    background:'#c3f3ff',
+    gradientBackground: ['white', '#c3f3ff'],
     primary:'',
     success:'',
     warning:"",
-    text1:'#FDFDFD',
-    text2: '#7F8489'
+    text1:'#41BBFF',
+    text2: '#058DD9',
+    foregory:'#0A6A9F'
 }

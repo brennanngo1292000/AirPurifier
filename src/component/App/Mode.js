@@ -14,10 +14,10 @@ const Mode = () => {
       switch (index) {
         case 0:
         case '0':
-          return onMode(1);
+          return onMode(0);
         case 1:
         case '1':
-          return onMode(2);
+          return onMode(1);
         default:
           return;
       }

@@ -70,7 +70,6 @@ export default function () {
       client.subscribe('stat/92/36/air_purifier/mode', 0);
       client.subscribe('stat/92/36/air_purifier/speed', 0);
       client.subscribe('stat/92/36/air_purifier/pm2.5', 0);
-      client.subscribe('stat/92/36/air_purifier/speed', 0);
     });
     client.connect();
   }
@@ -80,7 +79,7 @@ export default function () {
       setDebugData(
         `${debugData}\n onMessage: topic:${topic}, payload: ${data}`,
       );
-      let res = JSON.parse(data.toString());
+      let res = topic == 'tele/92/36/air_purifier/LWT'? data : JSON.parse(data.toString());
       switch (topic) {
         case 'tele/92/36/air_purifier/LWT':
           return setLWT(res);
@@ -121,7 +120,7 @@ export default function () {
     if (!lwt || lwt == 'Offline' || lwt == 'offline' || lwt == 'OFFLINE') {
       showFlashMessage('error', 'FAIL', 'The device is offline!');
       return false;
-    } else if (!has('power', power) || !power['power']) {
+    } else if (!has(power,'power') || !power['power']) {
       showFlashMessage('error', 'FAIL', 'The device is off!');
       return false;
     }

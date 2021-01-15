@@ -8,7 +8,7 @@ import Icon from './Core/Icon';
 
 const Mode = () => {
   const _action = useRef(undefined);
-  const {onMode, lwt, power} = useContext(StoreApp);
+  const {onMode} = useContext(StoreApp);
   const Selection = () => {
     const onPress = (index) => {
       switch (index) {

@@ -39,14 +39,15 @@ export function vibrate() {
 
 export default function () {
   const numPress = useRef(0);
-  const [mode, setMode] = useState({mode: 1});
-  const [power, setPower] = useState({power: 0});
-  const [speed, setSpeed] = useState({speed: 1});
-  const [lwt, setLWT] = useState('Offline');
-  const [pm25, setpm25] = useState({'pm2.5': '', time: ''});
+  const [mode, setMode] = useState(0);
+  const [power, setPower] = useState(0);
+  const [speed, setSpeed] = useState(0);
+  const [lwt, setLWT] = useState(false);
+  const [pm25, setpm25] = useState('');
   const [isConnect, setIsConnect] = useState(true);
   const [isDebug, setIsDebug] = useState(false);
   const [debugData, setDebugData] = useState('');
+  const [currentDebug, setCurrentDebug] = useState('');
   async function connect() {
     let client = await SingletonClient.getClient();
     client.on('closed', function () {
@@ -76,23 +77,26 @@ export default function () {
   function onMessage({data, topic}) {
     try {
       if (data == null || data == undefined) return;
-      setDebugData(
-        `${debugData}\n onMessage: topic:${topic}, payload: ${data}`,
-      );
-      let res = topic == 'tele/92/36/air_purifier/LWT'? data : JSON.parse(data.toString());
+      let res =
+        topic == 'tele/92/36/air_purifier/LWT'
+          ? data
+          : JSON.parse(data.toString());
+          setCurrentDebug(`${new Date() .toTimeString()}: onMessage from topic ${topic} with payload ${data}`)
       switch (topic) {
         case 'tele/92/36/air_purifier/LWT':
-          return setLWT(res);
+          return setLWT(res == 'Online');
         case 'stat/92/36/air_purifier/power':
-          return setPower(res);
+          if (has(res, 'power'))
+            return setPower(res['power']);
         case 'stat/92/36/air_purifier/mode':
-          return setMode(res);
+          if (has(res, 'mode'))
+            return setMode(res['mode']);
         case 'stat/92/36/air_purifier/speed':
-          return setSpeed(res);
+          if (has(res, 'speed'))
+            return setSpeed(res['speed']);
         case 'stat/92/36/air_purifier/pm2.5':
-          return setpm25(res);
-        case 'stat/92/36/air_purifier/speed':
-          return setSpeed(res);
+          if (has(res, 'pm2.5'))
+            return setpm25(res['pm2.5']);
         default:
           return;
       }
@@ -107,9 +111,7 @@ export default function () {
       let newData = isObject(data)
         ? JSON.stringify({...data, by: 'ap_co'})
         : data;
-      setDebugData(
-        `${debugData}\n publish: topic:${topic}, payload: ${newData}`,
-      );
+        setCurrentDebug(`${new Date() .toTimeString()}: publish to topic ${topic} with payload  ${newData}\n\n${debugData}\n`);
       log('data sent ' + newData);
       client.publish(topic, newData, 0, false);
     } catch (error) {
@@ -117,10 +119,10 @@ export default function () {
     }
   }
   function isSent(lwt, power) {
-    if (!lwt || lwt == 'Offline' || lwt == 'offline' || lwt == 'OFFLINE') {
+    if (!lwt) {
       showFlashMessage('error', 'FAIL', 'The device is offline!');
       return false;
-    } else if (!has(power,'power') || !power['power']) {
+    } else if (power != 1) {
       showFlashMessage('error', 'FAIL', 'The device is off!');
       return false;
     }
@@ -153,7 +155,7 @@ export default function () {
     }
   }
   async function onPower(value) {
-    let is = await isSent(lwt, {power: 1});
+    let is = await isSent(lwt, 1);
     if (is) {
       isDebug &&
         showFlashMessage(
@@ -197,6 +199,10 @@ export default function () {
       if (client) client.disconnect();
     };
   }, []);
+
+  useEffect(()=>{
+   if(currentDebug) setDebugData( `${currentDebug}\n\n${debugData}\n`);
+  }, [currentDebug])
 
   return (
     <SafeAreaProvider>

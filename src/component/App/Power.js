@@ -8,7 +8,7 @@ import Icon from './Core/Icon';
 function Power() {
   const {power, onPower} = useContext(StoreApp);
   const _onPower = () => {
-    if (has(power, 'power') && power['power'] == 1) onPower(0);
+    if (power == 1) onPower(0);
     else onPower(1);
   };
   return (
